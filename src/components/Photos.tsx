@@ -44,7 +44,7 @@ const Photos: React.FunctionComponent = () => {
         {photos.length} photos of album <i>{album.title}</i>
       </h4>
       <small className="form-text text-muted">Select a thumnail to see its details</small>
-      <div className="row justify-content-md-center">
+      <div className="row justify-content-center">
         {
           photos.map((photo: NMavennet.IPhoto) => (
             <a
