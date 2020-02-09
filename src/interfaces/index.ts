@@ -41,7 +41,6 @@ export namespace NMavennet {
 
   export interface IStoreState {
     userId: string;
-    userAlbumId: string;
     users: IUser[];
     albums: IAlbum[];
     photos: IPhoto[];
