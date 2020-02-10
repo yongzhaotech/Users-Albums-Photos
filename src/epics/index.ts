@@ -1,31 +1,32 @@
 import { combineEpics, ofType } from "redux-observable";
-import { mergeMap } from "rxjs/operators";
+import { mergeMap, map } from "rxjs/operators";
 import * as actions from "../action";
 import { NMavennet } from "../interfaces";
+import { ajax } from "rxjs/ajax";
 
 const fetchUsersEpic = (action$: any) => action$.pipe(
 	ofType(actions.fetchUsers.toString()),
-	mergeMap((action: NMavennet.IActions) =>
-		request(action.payload).then(
-			response => actions.setUsers(response)
+	mergeMap(({ payload }: NMavennet.IActions) =>
+		ajax.getJSON(payload).pipe(
+			map((response: any) => actions.setUsers(response))
 		)
 	)
 );
 
 const fetchAlbumsEpic = (action$: any) => action$.pipe(
 	ofType(actions.fetchAlbums.toString()),
-	mergeMap((action: NMavennet.IActions) =>
-		request(action.payload).then(
-			response => actions.setAlbums(response)
+	mergeMap(({ payload }: NMavennet.IActions) =>
+		ajax.getJSON(payload).pipe(
+			map((response: any) => actions.setAlbums(response))
 		)
 	)
 );
 
 const fetchPhotosEpic = (action$: any) => action$.pipe(
 	ofType(actions.fetchPhotos.toString()),
-	mergeMap((action: NMavennet.IActions) =>
-		request(action.payload).then(
-			response => actions.setPhotos(response)
+	mergeMap(({ payload }: NMavennet.IActions) =>
+		ajax.getJSON(payload).pipe(
+			map((response: any) => actions.setPhotos(response))
 		)
 	)
 );
@@ -37,7 +38,3 @@ const RootEpic = combineEpics(
 );
 
 export default RootEpic;
-
-const request = (url: string) => fetch(url)
-	.then(response => response.json())
-	.catch(e => { });
