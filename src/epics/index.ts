@@ -1,12 +1,12 @@
 import { combineEpics, ofType } from "redux-observable";
-import { mergeMap, map } from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
 import * as actions from "../action";
 import { NMavennet } from "../interfaces";
 import { ajax } from "rxjs/ajax";
 
 const fetchUsersEpic = (action$: any) => action$.pipe(
 	ofType(actions.fetchUsers.toString()),
-	mergeMap(({ payload }: NMavennet.IActions) =>
+	switchMap(({ payload }: NMavennet.IActions) =>
 		ajax.getJSON(payload).pipe(
 			map((response: any) => actions.setUsers(response))
 		)
@@ -15,7 +15,7 @@ const fetchUsersEpic = (action$: any) => action$.pipe(
 
 const fetchAlbumsEpic = (action$: any) => action$.pipe(
 	ofType(actions.fetchAlbums.toString()),
-	mergeMap(({ payload }: NMavennet.IActions) =>
+	switchMap(({ payload }: NMavennet.IActions) =>
 		ajax.getJSON(payload).pipe(
 			map((response: any) => actions.setAlbums(response))
 		)
@@ -24,7 +24,7 @@ const fetchAlbumsEpic = (action$: any) => action$.pipe(
 
 const fetchPhotosEpic = (action$: any) => action$.pipe(
 	ofType(actions.fetchPhotos.toString()),
-	mergeMap(({ payload }: NMavennet.IActions) =>
+	switchMap(({ payload }: NMavennet.IActions) =>
 		ajax.getJSON(payload).pipe(
 			map((response: any) => actions.setPhotos(response))
 		)
