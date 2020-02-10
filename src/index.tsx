@@ -10,13 +10,16 @@ import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage"
 import App from "./App";
 import RootEpic from "./epics";
+import { ajax } from "rxjs/ajax";
 import * as serviceWorker from "./serviceWorker";
 
 const config = {
   key: "mavennet-ui-assignment",
   storage,
 },
-  epicMiddleware: any = createEpicMiddleware(),
+  epicMiddleware: any = createEpicMiddleware({
+    dependencies: { ajax }
+  }),
   store: any = createStore(
     persistReducer(config, RootReducer),
     composeWithDevTools(applyMiddleware(epicMiddleware))
